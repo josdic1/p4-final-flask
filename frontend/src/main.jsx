@@ -7,5 +7,5 @@ import './index.css'
 const router = createBrowserRouter(routes)
 
 const root = createRoot(document.getElementById('root'))
-root.render(<StrictMode><RouterProvider router={router} /></StrictMode>)
+root.render(<RouterProvider router={router} />)
 

@@ -1,10 +1,11 @@
 import App from "./App";
-import RelationshipGenerator from "./components/RelationshipGenerator";
+import Home from "./pages/Home";
+// import RelationshipGenerator from "./components/RelationshipGenerator";
 
 
 const routes = [
     { path: "/", element: <App />, children: [
-        {index: true, element: <RelationshipGenerator />},
+        {index: true, element: <Home />},
  
     ]}
 ]
