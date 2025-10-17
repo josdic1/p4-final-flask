@@ -14,8 +14,9 @@ class User(db.Model):
     # Relationships
     recipes = db.relationship('Recipe', back_populates='user', cascade='all, delete-orphan')
 
+    # CORRECTED __repr__
     def __repr__(self):
-        return f'<User {self.name}>'
+        return f'{self.name}'
 
 
 class Recipe(db.Model):
@@ -33,7 +34,7 @@ class Recipe(db.Model):
     category = db.relationship('Category', back_populates='recipes')
 
     def __repr__(self):
-        return f'<Recipe {self.name}>'
+        return f'<Recipe {self.name}> | <user_id> {self.user_id} | <category_id> {self.category_id}'
 
 
 class Category(db.Model):
@@ -47,7 +48,6 @@ class Category(db.Model):
     # Relationships
     recipes = db.relationship('Recipe', back_populates='category', cascade='all, delete-orphan')
 
+    # CORRECTED __repr__
     def __repr__(self):
-        return f'<Category {self.name}>'
-
-
+        return f'{self.name}'

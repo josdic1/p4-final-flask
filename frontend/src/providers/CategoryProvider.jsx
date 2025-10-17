@@ -1,12 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
 import CategoryContext from "../contexts/CategoryContext";
-import { API_URL } from '../utils/api_url';
+import { getCategories } from '../services/api';  // Import the service function
 
 function CategoryProvider({ children }) {
     const [categories, setCategories] = useState([]);
-
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchCategories();
@@ -14,22 +13,30 @@ function CategoryProvider({ children }) {
 
     async function fetchCategories() {
         try {
-            const response = await axios.get(`${API_URL}/categories`);
+            setLoading(true);
+            const response = await getCategories();  // Use your service function
             setCategories(response.data);
+            setError(null);
         } catch (error) {
             console.error('Error fetching categories:', error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     } 
 
     const value = useMemo(() => ({
         categories,
-        setCategories
-    }), [categories, setCategories]);
+        setCategories,
+        loading,
+        error,
+        refetch: fetchCategories  // Allow manual refetch
+    }), [categories, loading, error]);
 
-return (
-       <CategoryContext.Provider value={value}>
+    return (
+        <CategoryContext.Provider value={value}>
             {children}
-       </CategoryContext.Provider>
+        </CategoryContext.Provider>
     );
 }
 
